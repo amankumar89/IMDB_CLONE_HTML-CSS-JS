@@ -74,7 +74,7 @@ function loadMoviesToContainer(movieList) {
     });
   }
 
-  const allMovie = document.querySelectorAll(".movie");
+  const allMovie = document.querySelectorAll("img");
   for (let i = 0; i < allMovie.length; i++) {
     allMovie[i].addEventListener("click", () => {
       const singleMovie = allMovie[i];
