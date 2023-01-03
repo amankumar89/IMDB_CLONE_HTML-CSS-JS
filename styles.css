@@ -30,7 +30,8 @@ nav {
 }
 
 #logo {
-  width: 200px;
+  width: 250px;
+  height: 40px;
   text-align: center;
   background-color: #f5c518;
   padding: 5px 10px;
@@ -40,7 +41,7 @@ nav {
 }
 
 #logo h3 {
-  font-size: 1rem;
+  font-size: 1.5rem;
 }
 
 #fav {
@@ -76,12 +77,15 @@ nav {
 #search-movies input:focus {
   outline: none;
   border: 2px solid turquoise;
+  color: red;
 }
 
 header {
   padding: 10px;
   text-align: center;
 }
+
+/* Main Container */
 
 #movies-lists {
   display: flex;
@@ -180,32 +184,34 @@ header {
 /* single movie page */
 
 .singleMovie {
-  width: 100vw;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  padding: 5px 10px;
+  align-items: center;
+  justify-content: center;
 }
 .left-block {
-  width: 40%;
+  width: 400px;
   height: 400px;
-  margin: 5px;
+  margin: 10px;
   overflow: hidden;
   box-shadow: 1px 1px 5px 1.5px #0037ff;
   border-radius: 6px;
 }
+
 .left-block img {
-  flex-shrink: 0;
-  min-width: 100%;
-  min-height: 100%;
+  width: 400px;
+  height: 400px;
+  object-fit: fill;
 }
 
 .right-block {
-  height: inherit;
-  display: flex;
-  flex-direction: column;
+  width: 600px;
+  /* height: 450px; */
+  /* display: flex;
   flex-wrap: wrap;
-  width: 55%;
-  margin: 5px;
+  flex-direction: column; */
+  margin: 10px;
   padding: 10px;
   text-align: center;
   text-align: left;
