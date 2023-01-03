@@ -50,7 +50,7 @@ function loadMoviesToContainer(movieList) {
 
     singleMovie.innerHTML = `
    <img
-          src="${getImageUrl(poster_path)}"
+          src="${getImageUrl(poster_path)}" class='moviePoster'
           alt="movie-poster"
         />
         <div class="movie-info">
@@ -74,18 +74,58 @@ function loadMoviesToContainer(movieList) {
     });
   }
 
-  const allMovie = document.querySelectorAll("img");
-  for (let i = 0; i < allMovie.length; i++) {
-    allMovie[i].addEventListener("click", () => {
-      const singleMovie = allMovie[i];
-      showSingleMovie(singleMovie);
+  // addEventListener click for every movie
+  const grids = document.querySelectorAll(".movie");
+  grids.forEach((grid) => {
+    // console.log(grid.childNodes[1]);
+    grid.childNodes[1].addEventListener("click", () => {
+      let value = grid.childNodes[5].childNodes[2].getAttribute("onclick");
+      let id = value.match(/\d/g);
+      id = id.join("");
+      showSingleMovie(id);
     });
-  }
+  });
 }
 
-function showSingleMovie(movie) {
-  console.log(movie.children);
+// fetch single movie
+async function showSingleMovie(id) {
+  const url = BASE_URL + "/movie/" + id + "?" + API_KEY;
+
+  const response = await fetch(url);
+  let movie = await response.json();
+
+  const { title, vote_average, poster_path, overview, release_date } = movie;
+
   moviesContainer.innerHTML = "";
+
+  document.getElementById("heading").innerHTML = `<h2>Movie Details</h2>`;
+
+  singleMovie = document.createElement("div");
+
+  singleMovie.classList.add("singleMovie");
+
+  singleMovie.innerHTML = `<div class="left-block">
+          <img
+            src="${getImageUrl(poster_path)}"
+          />
+        </div>
+        <div class="right-block">
+          <div class="title"><h4>${title}</h4></div>
+          <div class="release-year">
+            <p>Release Year: <span id="year">${release_date}</span></p>
+          </div>
+          <div class="ratings">
+            <p>Ratings&#11088;: ${vote_average}</p>
+          </div>
+          <div class="overview">
+            <p class="plot-title">Movie Overview</p>
+            <p>
+              ${overview}
+            </p>
+          </div>
+        </div>`;
+
+  moviesContainer.appendChild(singleMovie);
 }
 
 // adding single movie to favorite
@@ -127,8 +167,21 @@ async function fetchFavMovie(id) {
         </div>`;
   //  now append this upcoming html in singleMovie Container
   moviesContainer.appendChild(singleMovie);
+
+  // addEventListener click for every movie
+  const grids = document.querySelectorAll(".movie");
+  grids.forEach((grid) => {
+    // console.log(grid.childNodes[1]);
+    grid.childNodes[1].addEventListener("click", () => {
+      let value = grid.childNodes[5].childNodes[2].getAttribute("onclick");
+      let id = value.match(/\d/g);
+      id = id.join("");
+      showSingleMovie(id);
+    });
+  });
 }
 
+// remove from the favorite container
 function removeFromFavorite(id) {
   favoriteMovies = JSON.parse(localStorage.getItem("movies"));
   const newMovieList = favoriteMovies.filter((movie) => {
